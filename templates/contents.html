@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>Contents</title>
+</head>
+<body>
+{% if data%}
+{% for d in data%}
+<p>data: {{ d }}</p>
+{% endfor %}
+{% else %}
+<p>No Data Availiable</p>
+{% endif %}
+</body>
+</html>

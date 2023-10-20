@@ -1,0 +1,51 @@
+{% extends "template.html" %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block Contents %}
+<h1 class="display-1">{{ post.title }}</h1>
+<div>
+    <a href="{{url_for('home')}}"><button class="btn btn-warning">HOME</button></a>
+</div>
+<br>
+{% if post.img=="static/img/default_post_image.png" %}
+<img src="../{{ post.img }}">
+{% else %}
+<img src="../static/img/{{ post.img }}">
+{% endif %}
+<br>
+{{post.img}}
+../static/img/{{ post.img }}
+<p>{{ post.content }}</p>
+<p>Posted Time: {{ post.date_posted }}</p>
+<p>Post by {{ post.user_id }}</p>
+
+{% if current_user.is_authenticated %}
+<form class="form form-horizontal" method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend class="form-label">New Comment</legend>
+        <dir>
+            {{form.comment.label(class="form-label")}}
+            {{form.comment(class="form-control", rows="3")}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+{% else %}
+<h2 class="display-4">You need to login/signin to leave a comment on this post!</h2>
+<a href="{{url_for('login')}}">LOG IN</a>
+<a href="{{url_for('register')}}">REGISTER</a>
+{% endif %}
+
+<h1 class="display-6">Comments</h1>
+<ul class="list-group">
+    {% for comment in comments %}
+        <li class="list-group-item">
+            {{ comment.user_id }}({{ comment.date_posted }}): {{ comment.content }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

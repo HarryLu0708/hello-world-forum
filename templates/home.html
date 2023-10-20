@@ -1,0 +1,111 @@
+{% extends "template.html" %}
+
+
+{% block head %}
+{{ super() }}
+<title>Home</title>
+{% endblock %}
+
+{% block Contents %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+{% if name %}
+
+<div class="p-3 mb-2 bg-light-subtle text-emphasis-light">
+<h1>Hello {{ name }}!</h1>
+{% else %}
+<h1 class="display-1">Hello, World!</h1>
+{% endif %}
+<p class="lead">The Best Forum in the World!</p>
+
+<!---->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('logout')}}">Log Out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('account',id=current_user.id)}}">Account</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('login')}}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('register')}}">Register</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('about')}}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('contents')}}">Contents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('test')}}">Test</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('search')}}">Search</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<!---->
+
+</div>
+
+<h1 class="display-4">Posts</h1>
+{% if current_user.is_authenticated %}
+<div>
+<a href="{{url_for('new_post')}}">
+    <button class="btn btn-warning">
+        New Post
+    </button>
+</a>
+</div>
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for row in posts|batch(3) -%}
+  {% for post in row %}
+  <div class="col">
+    <div class="card h-100">
+      {% if post.img=="static/img/default_post_image.png" %}
+      <img src="../{{ post.img }}" class="card-img-top">
+      {% else %}
+      <img src="../static/img/{{ post.img }}" class="card-img-top">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">Posted by <a href="{{url_for('account',id=post.user_id)}}" class="card-link">{{post.user_id}}</a></p>
+      </div>
+      <div class="card-footer">
+        <a href="{{url_for('post',id=post.id)}}" class="card-link">Go to this post</a>
+          {% if post.user_id == current_user.id %}
+          <a href="{{url_for('update',id=post.id)}}" class="card-link">Update</a>
+          <a href="{{url_for('delete',id=post.id)}}" class="card-link">Delete</a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endfor %}
+</div>
+
+{% endblock %}
+

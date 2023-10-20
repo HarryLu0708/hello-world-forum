@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% block Contents %}
+
+<a href="{{url_for('home')}}">HOME</a>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend >Update Post</legend>
+        <dir>
+            {{form.title.label(class="form-label")}}
+            {{form.title(class="form-control")}}
+        </dir>
+        <dir>
+            {{form.text.label(class="form-label")}}
+            {{form.text(class="form-control",rows="3")}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+
+{% endblock %}

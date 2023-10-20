@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+{% block Contents %}
+
+<a href="{{url_for('home')}}">HOME</a>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend class="form-label">Search</legend>
+        <dir>
+            {{form.searched.label(class="form-label")}}
+            {{form.searched(class="form-control")}}
+        </dir>
+        <dir>
+            {{form.search_type.label(class="form-label")}}
+            {{form.search_type(class="form-control")}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+
+{% if posts %}
+{% for post in posts %}
+
+<div class="card w-100" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{post.title}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Posted by <a href="{{url_for('account',id=post.user_id)}}" class="card-link">{{post.user_id}}</a></h6>
+      <a href="{{url_for('post',id=post.id)}}" class="card-link">Go to this post</a>
+      {% if post.user_id == current_user.id %}
+      <a href="{{url_for('update',id=post.id)}}" class="card-link">Update</a>
+      <a href="{{url_for('delete',id=post.id)}}" class="card-link">Delete</a>
+      {% endif %}
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endblock %}

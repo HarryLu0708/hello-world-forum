@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+{% block Contents %}
+
+<form class="form form-horizontal" method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend class="form-label">Login</legend>
+        <dir>
+            {{form.email.label(class="form-label")}}
+            {{form.email(class="form-control",type="email")}}
+        </dir>
+        <dir>
+            {{form.password.label(class="form-label")}}
+            {{form.password(class="form-control", type="password")}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+
+{% endblock %}

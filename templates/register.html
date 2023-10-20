@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block Contents %}
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend class="form-label">Join</legend>
+        <dir>
+            {{form.username.label(class="form-label")}}
+            {{form.username(class="form-control")}}
+        </dir>
+        <dir>
+            {{form.password.label(class="form-label")}}
+            {{form.password(class="form-control")}}
+        </dir>
+        <dir>
+            {{form.confirm_password.label(class="form-label")}}
+            {{form.confirm_password(class="form-control")}}
+        </dir>
+        <dir>
+            {{form.email.label(class="form-label")}}
+            {{form.email(class="form-control")}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+
+{% endblock %}

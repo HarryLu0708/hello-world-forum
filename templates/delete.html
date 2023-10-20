@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% block Contents %}
+
+<a href="{{url_for('home')}}">HOME</a>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend >Delete Post</legend>
+        <p>Delete this post?</p>
+        <dir>
+            {{form.confirm.label(class="form-label")}}
+            {{form.confirm()}}
+        </dir>
+    </fieldset>
+    {{form.submit(class="btn btn-warning")}}
+</form>
+
+{% endblock %}
